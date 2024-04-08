@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Combinations</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    input {
+      width: 50px;
+      margin: 10px;
+    }
+    button {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #output {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Number Combinations</h1>
+  <div>
+    <p>Enter up to 15 numbers:</p>
+    <div id="inputFields"></div>
+    <button onclick="generateCombinations()">Generate Combinations</button>
+  </div>
+  <div id="output"></div>
+
+  <script>
+    function generateCombinations() {
+      var inputs = document.querySelectorAll('input[type="number"]');
+      var numbers = [];
+      for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].value.trim() !== '') {
+          numbers.push(parseInt(inputs[i].value));
+        }
+      }
+
+      var combinations = getCombinations(numbers, 4);
+
+      var outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = '<h2>All Combinations:</h2>';
+      combinations.forEach(function(combination, index) {
+        outputDiv.innerHTML += '<p>Combination ' + (index + 1) + ': [' + combination.join(', ') + ']</p>';
+      });
+    }
+
+    function getCombinations(arr, size) {
+      var combinations = [];
+
+      function generateCombinationsHelper(start, combination) {
+        if (combination.length === size) {
+          combinations.push(combination);
+          return;
+        }
+
+        for (var i = start; i < arr.length; i++) {
+          generateCombinationsHelper(i + 1, combination.concat(arr[i]));
+        }
+      }
+
+      generateCombinationsHelper(0, []);
+      return combinations;
+    }
+
+    // Dynamically create input fields
+    var inputFieldsDiv = document.getElementById('inputFields');
+    for (var i = 0; i < 15; i++) {
+      var input = document.createElement('input');
+      input.type = 'number';
+      input.placeholder = 'Number ' + (i + 1);
+      inputFieldsDiv.appendChild(input);
+    }
+  </script>
+</body>
+</html>
