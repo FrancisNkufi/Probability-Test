@@ -53,9 +53,11 @@
 </div>
 
 <button onclick="generateCombinations()" type="button" class="btn btn-success">Generate Combinations</button>
-    <hr/>
 
 <div id="result"></div>
+
+
+<footer>&copy; <span id="currentYear"></span> Designed by Francis Nkufi 👨‍⚖️👨‍🎓</footer>
 
 <script>
 function generateCombinations() {
@@ -95,11 +97,15 @@ function generateCombinations() {
         resultDiv.innerHTML += "<p>Combination " + (index + 1) + ": " + combination.join(", ") + "</p>";
     });
 }
+
+const currentYear = new Date().getFullYear();
+
+document.getElementById("currentYear").textContent = currentYear;
 </script>
-<hr/>
-<footer>
-    <p>©2024: Designed by Francis Nkufi👨‍⚖️👨‍🎓</p>
-</footer>
+<hr>
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
