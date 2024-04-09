@@ -22,7 +22,6 @@ label {
 
 input[type="text"],
 input[type="number"] {
-    background-color: #333333; /* Dark input background color */
     color: #ffffff; /* Light text color */
     border: 1px solid #555555; /* Medium border color */
     padding: 8px;
@@ -39,6 +38,6 @@ footer {
     color: #ffffff; /* Light text color */
     text-align: center;
     padding: 10px 0;
-    font-size: small;
+    font-size:x-small;
 }
 
