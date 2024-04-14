@@ -26,7 +26,7 @@
     <input type="number" id="groupSize" min="1">
 </div>
 
-<button onclick="generatePermutations()" type="button" class="btn btn-success">Generate Arrangement</button>
+<button onclick="generatePermutations()"type="button" class="btn btn-success">Generate Arrangement</button>
 
 <div id="result"></div>
 
@@ -40,65 +40,22 @@ function addNumberInput() {
     container.appendChild(input);
 }
 
-function generateCombinations(arr, size) {
-    var results = [];
-    function recurse(combination, start) {
-        if (combination.length === size) {
-            results.push(combination);
-        } else {
-            for (var i = start; i < arr.length; i++) {
-                recurse(combination.concat(arr[i]), i + 1);
-            }
-        }
-    }
-    recurse([], 0);
-    return results;
-}
-
-function permute(arr) {
-    var results = [];
-    function swap(arr, i, j) {
-        var temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    function recurse(arr, start) {
-        if (start === arr.length - 1) {
-            results.push(arr.slice());
-        } else {
-            for (var i = start; i < arr.length; i++) {
-                swap(arr, start, i);
-                recurse(arr, start + 1);
-                swap(arr, start, i); // backtrack
-            }
-        }
-    }
-    recurse(arr, 0);
-    return results;
-}
-
 function generatePermutations() {
     var numbersInputs = document.querySelectorAll("#numberInputs input");
     var numbersArray = Array.from(numbersInputs).map(input => Number(input.value));
     var groupSize = parseInt(document.getElementById("groupSize").value);
 
-    // Generate combinations of specified size
-    var combinations = generateCombinations(numbersArray, groupSize);
+    // Create a Web Worker
+    var worker = new Worker("worker.js");
 
-    // Generate permutations for each combination
-    var permutations = [];
-    combinations.forEach(function(combination) {
-        permutations = permutations.concat(permute(combination));
-    });
+    // Message handler for the worker
+    worker.onmessage = function(event) {
+        var resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = event.data;
+    };
 
-    // Display the permutations
-    var resultDiv = document.getElementById("result");
-    resultDiv.innerHTML = "<h2>Arrangement:</h2>";
-    resultDiv.innerHTML += "<ol>";
-    permutations.forEach(function(permutation, index) {
-        resultDiv.innerHTML += "<li>Arrangement " + (index + 1) + ": " + permutation.join(", ") + "</li>";
-    });
-    resultDiv.innerHTML += "</ol>";
+    // Send data to the worker
+    worker.postMessage({ numbersArray: numbersArray, groupSize: groupSize });
 }
 
 const currentYear = new Date().getFullYear();
@@ -106,6 +63,7 @@ const currentYear = new Date().getFullYear();
 document.getElementById("currentYear").textContent = currentYear;
 </script>
 
+<script src="worker.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
