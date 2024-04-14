@@ -49,9 +49,9 @@ self.onmessage = function(event) {
     });
 
     // Prepare the result HTML
-    var resultHTML = "<h2>Permutations:</h2><ol>";
+    var resultHTML = "<h2>Arrangement:</h2><ol>";
     permutations.forEach(function(permutation, index) {
-        resultHTML += "<li>Permutation " + (index + 1) + ": " + permutation.join(", ") + "</li>";
+        resultHTML += "<li>Arrangement " + (index + 1) + ": " + permutation.join(", ") + "</li>";
     });
     resultHTML += "</ol>";
 
